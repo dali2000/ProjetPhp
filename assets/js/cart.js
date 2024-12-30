@@ -1,114 +1,123 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', () => {
     const cartItemsContainer = document.querySelector('.cart-items');
     const subtotalElement = document.getElementById('subtotal');
+    const deliveryFeeElement = document.getElementById('delivery-fee');
     const totalElement = document.getElementById('total');
-    const checkoutBtn = document.getElementById('checkout-btn');
-    const deliveryForm = document.getElementById('delivery-form');
-    const statusTracker = document.getElementById('status-tracker');
 
-    function renderCart() {
-        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    // Récupérer les produits du panier dans le localStorage
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    console.log(cart);
+
+    // Vérifier que les produits ont des valeurs valides
+    function validateItem(item) {
+        if (!item.price || isNaN(item.price)) {
+            item.price = 0; // Valeur par défaut si price est invalide
+        }
+        if (!item.quantity || isNaN(item.quantity) || item.quantity < 1) {
+            item.quantity = 1; // Valeur par défaut si quantity est invalide
+        }
+        return item;
+    }
+
+    // Afficher les produits du panier
+    function renderCartItems() {
+        // Vider le conteneur des produits du panier avant de les afficher
         cartItemsContainer.innerHTML = '';
+
+        // Calculer le sous-total
         let subtotal = 0;
 
+        // Afficher chaque produit dans le panier
         cart.forEach(item => {
-            const cartItem = document.createElement('div');
-            cartItem.classList.add('cart-item');
-            cartItem.innerHTML = `
-                <img src="/img/${item.id}.jpg" alt="${item.name}">
-                <div class="cart-item-details">
-                    <div class="cart-item-name">${item.name}</div>
-                    <div class="cart-item-price">$${item.price.toFixed(2)}</div>
-                    <div class="cart-item-quantity">
-                        <button class="quantity-btn minus" data-id="${item.id}">-</button>
-                        <input type="number" class="quantity-input" value="${item.quantity}" min="1" max="10" data-id="${item.id}">
-                        <button class="quantity-btn plus" data-id="${item.id}">+</button>
-                    </div>
-                </div>
-                <button class="remove-item" data-id="${item.id}">Remove</button>
+            // Valider chaque élément du panier
+            item = validateItem(item);
+
+            const cartItemElement = document.createElement('div');
+            cartItemElement.classList.add('cart-item');
+
+            cartItemElement.innerHTML = `
+<div class="cart-item">
+    <img src="${item.image}" alt="${item.name}" class="cart-item-img">
+    <div class="cart-item-details">
+        <span class="cart-item-name">${item.name}</span>
+        <span class="cart-item-price">$${item.price}</span>
+    </div>
+    <div class="cart-item-quantity">
+        <button class="decrease-btn" data-id="${item.id}">-</button>
+        <input type="number" value="${item.quantity}" class="quantity-input" data-id="${item.id}" min="1">
+        <button class="increase-btn" data-id="${item.id}">+</button>
+    </div>
+    <div class="cart-item-total">
+        $${(item.price * item.quantity)}
+    </div>
+    <button class="remove-item" data-id="${item.id}">Remove</button>
+</div>
+
             `;
-            cartItemsContainer.appendChild(cartItem);
+
+            cartItemsContainer.appendChild(cartItemElement);
+
+            // Ajouter le prix du produit au sous-total
             subtotal += item.price * item.quantity;
         });
 
-        subtotalElement.textContent = `$${subtotal.toFixed(2)}`;
-        const total = subtotal + 5; // Assuming $5 delivery fee
-        totalElement.textContent = `$${total.toFixed(2)}`;
+        // Mettre à jour le sous-total
+        subtotalElement.textContent = `$${subtotal}`;
+
+        // Les frais de livraison sont fixes à $5.00
+        const deliveryFee = 5.00;
+        deliveryFeeElement.textContent = `$${deliveryFee}`;
+
+        // Calculer le total (sous-total + frais de livraison)
+        const total = subtotal + deliveryFee;
+        totalElement.textContent = `$${total}`;
     }
 
-    function updateCart(itemId, newQuantity) {
-        let cart = JSON.parse(localStorage.getItem('cart')) || [];
-        const itemIndex = cart.findIndex(item => item.id === parseInt(itemId));
-        if (itemIndex > -1) {
-            if (newQuantity > 0) {
-                cart[itemIndex].quantity = newQuantity;
-            } else {
-                cart.splice(itemIndex, 1);
-            }
+    // Fonction pour mettre à jour la quantité d'un produit
+    function updateQuantity(productId, newQuantity) {
+        const productIndex = cart.findIndex(item => item.id === productId);
+        if (productIndex > -1) {
+            cart[productIndex].quantity = newQuantity;
             localStorage.setItem('cart', JSON.stringify(cart));
-            renderCart();
+            renderCartItems();  // Mettre à jour l'affichage
         }
     }
 
-    cartItemsContainer.addEventListener('click', (e) => {
-        if (e.target.classList.contains('quantity-btn')) {
-            const itemId = e.target.getAttribute('data-id');
-            const input = e.target.parentElement.querySelector('.quantity-input');
-            let newQuantity = parseInt(input.value);
-            if (e.target.classList.contains('plus')) {
-                newQuantity++;
-            } else if (e.target.classList.contains('minus')) {
-                newQuantity = Math.max(newQuantity - 1, 0);
-            }
-            updateCart(itemId, newQuantity);
-        } else if (e.target.classList.contains('remove-item')) {
-            const itemId = e.target.getAttribute('data-id');
-            updateCart(itemId, 0);
-        }
-    });
-
-    cartItemsContainer.addEventListener('change', (e) => {
-        if (e.target.classList.contains('quantity-input')) {
-            const itemId = e.target.getAttribute('data-id');
-            const newQuantity = parseInt(e.target.value);
-            updateCart(itemId, newQuantity);
-        }
-    });
-
-    checkoutBtn.addEventListener('click', () => {
-        const cart = JSON.parse(localStorage.getItem('cart')) || [];
-        if (cart.length === 0) {
-            alert('Your cart is empty. Add some items before checking out.');
-            return;
-        }
-        // Here you would typically process the order, send it to a server, etc.
-        // For this example, we'll just simulate order processing
-        alert('Order placed successfully! Check the order status below.');
-        simulateOrderProcess();
-    });
-
-    deliveryForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        // Here you would typically validate and process the delivery information
-        alert('Delivery information saved!');
-    });
-
-    function simulateOrderProcess() {
-        const steps = statusTracker.querySelectorAll('.status-step');
-        let currentStep = 0;
-
-        function updateStatus() {
-            if (currentStep < steps.length) {
-                steps[currentStep].classList.add('active');
-                currentStep++;
-                setTimeout(updateStatus, 3000); // Update status every 3 seconds
-            }
-        }
-
-        updateStatus();
+    // Fonction pour supprimer un produit du panier
+    function removeItem(productId) {
+        cart = cart.filter(item => item.id !== productId);
+        localStorage.setItem('cart', JSON.stringify(cart));
+        renderCartItems();  // Mettre à jour l'affichage
     }
 
-    // Initial render
-    renderCart();
+    // Ajouter des écouteurs d'événements pour augmenter, diminuer la quantité et supprimer un produit
+    cartItemsContainer.addEventListener('click', (event) => {
+        const target = event.target;
+        const productId = target.getAttribute('data-id');
+
+        if (target.classList.contains('increase-btn')) {
+            const quantityInput = document.querySelector(`.quantity-input[data-id="${productId}"]`);
+            let quantity = parseInt(quantityInput.value);
+            quantity += 1;
+            quantityInput.value = quantity;
+            updateQuantity(productId, quantity);
+        }
+
+        if (target.classList.contains('decrease-btn')) {
+            const quantityInput = document.querySelector(`.quantity-input[data-id="${productId}"]`);
+            let quantity = parseInt(quantityInput.value);
+            if (quantity > 1) {
+                quantity -= 1;
+                quantityInput.value = quantity;
+                updateQuantity(productId, quantity);
+            }
+        }
+
+        if (target.classList.contains('remove-item')) {
+            removeItem(productId);
+        }
+    });
+
+    // Initialiser l'affichage du panier
+    renderCartItems();
 });
-
