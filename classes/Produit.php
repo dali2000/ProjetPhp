@@ -1,6 +1,6 @@
 <?php
 
-class produit
+class Produit
 {
 
 }

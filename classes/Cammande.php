@@ -1,6 +1,6 @@
 <?php
 
-class cammande
+class Cammande
 {
 
 }
