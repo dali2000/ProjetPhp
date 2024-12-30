@@ -1,3 +1,9 @@
+<?php
+include '../classes/Produit.php';
+
+$produitClass = new Produit();
+$products = $produitClass->getProduits();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -24,7 +30,7 @@
             </ul>
             <div class="nav-right">
                 <div class="search-icon"><i class="fa fa-search" aria-hidden="true"></i></div>
-                <div class="cart-icon"><i class="fa fa-shopping-cart" aria-hidden="true"></i></div>
+                <div class="cart-icon"><a href="cart.php"><i class="fa fa-shopping-cart" aria-hidden="true"></li></i></a></div>
                 <button class="login-btn"><i class="fa fa-sign-in" aria-hidden="true"></i>Login</button>
             </div>
         </nav>
@@ -50,65 +56,21 @@
             </div>
 
             <div class="menu-items">
-                <!-- Village Special Burger -->
-                <div class="menu-item">
-                    <img src="/img/burger.jpg" alt="Village Special Burger">
-                    <div class="menu-item-content">
-                        <h3>Village Special Burger</h3>
-                        <p class="price">$12.99</p>
-                        <div class="quantity-control">
-                            <button class="quantity-btn minus">-</button>
-                            <input type="number" class="quantity-input" value="1" min="1" max="10">
-                            <button class="quantity-btn plus">+</button>
+                <?php foreach ($products as $product): ?>
+                    <div class="menu-item" data-id="<?php echo $product['id']; ?>"> <!-- Ajoutez le data-id ici -->
+                        <img src="../assets/img/pizza.png" alt="Village Special Burger">
+                        <div class="menu-item-content">
+                            <h3><?php echo $product['nomProduit']; ?></h3>
+                            <p class="price"><?php echo $product['prix']; ?>$</p>
+                            <div class="quantity-control">
+                                <button class="quantity-btn minus" data-id="<?php echo $product['id']; ?>">-</button>
+                                <input type="number" class="quantity-input" value="1" min="1" max="10">
+                                <button class="quantity-btn plus" data-id="<?php echo $product['id']; ?>">+</button>
+                            </div>
+                            <button class="add-to-cart-btn" data-id="<?php echo $product['id']; ?>">Add to Cart</button>
                         </div>
-                        <button class="add-to-cart-btn" data-id="1">Add to Cart</button>
                     </div>
-                </div>
-
-                <!-- Grilled Chicken Salad -->
-                <div class="menu-item">
-                    <img src="/img/salad.jpg" alt="Grilled Chicken Salad">
-                    <div class="menu-item-content">
-                        <h3>Grilled Chicken Salad</h3>
-                        <p class="price">$9.99</p>
-                        <div class="quantity-control">
-                            <button class="quantity-btn minus">-</button>
-                            <input type="number" class="quantity-input" value="1" min="1" max="10">
-                            <button class="quantity-btn plus">+</button>
-                        </div>
-                        <button class="add-to-cart-btn" data-id="2">Add to Cart</button>
-                    </div>
-                </div>
-
-                <!-- Chocolate Lava Cake -->
-                <div class="menu-item">
-                    <img src="/img/cake.jpg" alt="Chocolate Lava Cake">
-                    <div class="menu-item-content">
-                        <h3>Chocolate Lava Cake</h3>
-                        <p class="price">$6.99</p>
-                        <div class="quantity-control">
-                            <button class="quantity-btn minus">-</button>
-                            <input type="number" class="quantity-input" value="1" min="1" max="10">
-                            <button class="quantity-btn plus">+</button>
-                        </div>
-                        <button class="add-to-cart-btn" data-id="3">Add to Cart</button>
-                    </div>
-                </div>
-
-                <!-- Fresh Fruit Smoothie -->
-                <div class="menu-item">
-                    <img src="/img/smoothie.jpg" alt="Fresh Fruit Smoothie">
-                    <div class="menu-item-content">
-                        <h3>Fresh Fruit Smoothie</h3>
-                        <p class="price">$4.99</p>
-                        <div class="quantity-control">
-                            <button class="quantity-btn minus">-</button>
-                            <input type="number" class="quantity-input" value="1" min="1" max="10">
-                            <button class="quantity-btn plus">+</button>
-                        </div>
-                        <button class="add-to-cart-btn" data-id="4">Add to Cart</button>
-                    </div>
-                </div>
+                <?php endforeach; ?>
             </div>
         </section>
     </main>
@@ -159,5 +121,6 @@
     </footer>
 
     <script src="../assets/js/script.js"></script>
+    <script src="../assets/js/menu.js"></script>
 </body>
 </html>
