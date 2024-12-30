@@ -25,7 +25,7 @@
             <div class="nav-right">
                 <div class="search-icon"><i class="fa fa-search" aria-hidden="true"></i></div>
                 <a href="cart.php"><div class="cart-icon" ><i class="fa fa-shopping-cart" aria-hidden="true" hre></i></div></a>
-                <button class="login-btn"><i class="fa fa-sign-in" aria-hidden="true"></i>Login</button>
+                <button class="login-btn" onclick="window.location.href='../modules/auth/login.php'"><i class="fa fa-sign-in" aria-hidden="true"></i>Login</button>
             </div>
         </nav>
     </header>
