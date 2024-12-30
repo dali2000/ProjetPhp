@@ -1,0 +1,227 @@
+.cart-hero {
+    background-color: #FFA500;
+    color: #1a1a1a;
+    text-align: center;
+    padding: 8rem 5% 4rem;
+}
+
+.cart-hero h1 {
+    font-size: 3.5rem;
+    margin-bottom: 1rem;
+}
+
+.cart-hero p {
+    font-size: 1.2rem;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.cart-content {
+    display: flex;
+    justify-content: space-between;
+    padding: 4rem 5%;
+    gap: 2rem;
+}
+
+.cart-items {
+    flex: 2;
+}
+
+.cart-item {
+    display: flex;
+    align-items: center;
+    background-color: #333;
+    border-radius: 10px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+
+.cart-item img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 5px;
+    margin-right: 1rem;
+}
+
+.cart-item-details {
+    flex: 1;
+}
+
+.cart-item-name {
+    font-weight: bold;
+    color: #FFA500;
+}
+
+.cart-item-price {
+    color: #999;
+}
+
+.cart-item-quantity {
+    display: flex;
+    align-items: center;
+    margin-top: 0.5rem;
+}
+
+.quantity-btn {
+    background-color: #FFA500;
+    color: #1a1a1a;
+    border: none;
+    width: 25px;
+    height: 25px;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.quantity-input {
+    width: 40px;
+    text-align: center;
+    margin: 0 0.5rem;
+    background-color: #222;
+    color: white;
+    border: 1px solid #333;
+}
+
+.remove-item {
+    background-color: #FF4136;
+    color: white;
+    border: none;
+    padding: 0.5rem;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.cart-summary {
+    flex: 1;
+    background-color: #333;
+    border-radius: 10px;
+    padding: 2rem;
+}
+
+.cart-summary h2 {
+    color: #FFA500;
+    margin-bottom: 1rem;
+}
+
+.summary-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+
+#checkout-btn {
+    width: 100%;
+    padding: 1rem;
+    background-color: #FFA500;
+    color: #1a1a1a;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#checkout-btn:hover {
+    background-color: #FF8C00;
+}
+
+.delivery-info, .order-status {
+    padding: 4rem 5%;
+}
+
+.delivery-info h2, .order-status h2 {
+    color: #FFA500;
+    margin-bottom: 2rem;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #999;
+}
+
+.form-group input, .form-group textarea {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #333;
+    border-radius: 5px;
+    background-color: #222;
+    color: white;
+}
+
+.form-group textarea {
+    height: 100px;
+    resize: vertical;
+}
+
+#status-tracker {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 2rem;
+}
+
+.status-step {
+    text-align: center;
+    flex: 1;
+    position: relative;
+}
+
+.status-step:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    top: 25px;
+    left: 50%;
+    width: 100%;
+    height: 2px;
+    background-color: #333;
+}
+
+.status-step i {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 0.5rem;
+}
+
+.status-step.active i {
+    color: #FFA500;
+}
+
+.status-step span {
+    display: block;
+    font-size: 0.9rem;
+    color: #999;
+}
+
+@media (max-width: 768px) {
+    .cart-content {
+        flex-direction: column;
+    }
+
+    .cart-hero h1 {
+        font-size: 2.5rem;
+    }
+
+    #status-tracker {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .status-step {
+        display: flex;
+        align-items: center;
+        margin-bottom: 1rem;
+    }
+
+    .status-step:not(:last-child)::after {
+        display: none;
+    }
+
+    .status-step i {
+        margin-right: 1rem;
+        margin-bottom: 0;
+    }
+}
