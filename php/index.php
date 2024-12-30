@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact Us - Village Chef</title>
-    <link rel="stylesheet" href="/assets/css/styles.css">
-    <link rel="stylesheet" href="/assets/css/contact.css">
+    <title>Village Chef</title>
+    <link rel="stylesheet" href="../assets/css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
 </head>
 <body>
     <!-- Header -->
@@ -17,66 +17,61 @@
                 <span><span class="highlight">Village</span> CHEF</span>
             </div>
             <ul class="nav-links">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="about.html">About Us</a></li>
-                <li><a href="menu.html">Menu</a></li>
-                <li><a href="contact.html">Contact</a></li>
+                <li><a href="index.php">Home</a></li>
+                <li><a href="about.php">About Us</a></li>
+                <li><a href="menu.php">Menu</a></li>
+                <li><a href="contact.php">Contact</a></li>
             </ul>
             <div class="nav-right">
                 <div class="search-icon"><i class="fa fa-search" aria-hidden="true"></i></div>
-                <div class="cart-icon"><i class="fa fa-shopping-cart" aria-hidden="true"></i></div>
+                <a href="cart.php"><div class="cart-icon" ><i class="fa fa-shopping-cart" aria-hidden="true" hre></i></div></a>
                 <button class="login-btn"><i class="fa fa-sign-in" aria-hidden="true"></i>Login</button>
             </div>
         </nav>
     </header>
 
-    <!-- Contact Section -->
+    <!-- Hero Section -->
     <main>
-        <section class="contact-hero">
-            <h1>Get in Touch</h1>
-            <p>We'd love to hear from you! Reach out for any questions or feedback.</p>
-        </section>
-
-        <section class="contact-content">
-            <div class="contact-form">
-                <h2>Send us a message</h2>
-                <form id="contactForm">
-                    <div class="form-group">
-                        <label for="name">Name</label>
-                        <input type="text" id="name" name="name" required>
+        <section class="hero">
+            <div class="hero-content">
+                <h1>Grab Big Deals<br>on <span class="highlight">Yummy Meals!</span></h1>
+                <p>Lorem ipsum dolor sit amet consectetur. Aenean mau risnam tortor curabitur phasellus.</p>
+                <button class="get-started">Get Started</button>
+                
+                <div class="customers-section">
+                    <h3>Our Happy Customers</h3>
+                    <div class="customer-info">
+                        <div class="customer-avatars">
+                            <img src="../assets/img/avatar1.png" alt="" srcset=""class="avatar">
+                            <img src="../assets/img/avatar2.png" alt="" srcset=""class="avatar">
+                            <img src="../assets/img/avatar.png" alt="" srcset=""class="avatar">
+                        </div>
+                        <div class="rating">
+                            <span class="star">★</span>
+                            <span class="rating-number">4.8</span>
+                            <span class="review-count">(16.5k Review)</span>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" id="email" name="email" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="subject">Subject</label>
-                        <input type="text" id="subject" name="subject" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="message">Message</label>
-                        <textarea id="message" name="message" required></textarea>
-                    </div>
-                    <button type="submit" class="submit-btn">Send Message</button>
-                </form>
+                </div>
             </div>
-            <div class="contact-info">
-                <h2>Contact Information</h2>
-                <div class="info-item">
-                    <i class="fas fa-map-marker-alt"></i>
-                    <p>123 Restaurant Street, Food City, FC 12345</p>
+
+            <div class="hero-image-section">
+                <img class="main-dish-img" src="../assets/img/chicken.png" alt="">
+                <div class="courier-card">
+                    <img class="courier-avatar" src="../assets/img/jon.png" alt="">
+                    <div class="courier-info">
+                        <h4>Jon Williamson</h4>
+                        <p>Food Courier</p>
+                    </div>
+                    <div class="phone-icon"></div>
                 </div>
-                <div class="info-item">
-                    <i class="fas fa-phone"></i>
-                    <p>(123) 456-7890</p>
-                </div>
-                <div class="info-item">
-                    <i class="fas fa-envelope"></i>
-                    <p>info@villagechef.com</p>
-                </div>
-                <div class="info-item">
-                    <i class="fas fa-clock"></i>
-                    <p>Mon-Fri: 9am-10pm, Sat-Sun: 10am-11pm</p>
+                <div class="pizza-card">
+                    <img class="pizza-img" src="../assets/img/pizza.png" alt="">
+                    <div class="pizza-info">
+                        <h4>Cheese Pizza</h4>
+                        <div class="stars">★★★★★</div>
+                        <p class="price">₹299/-</p>
+                    </div>
                 </div>
             </div>
         </section>
@@ -127,7 +122,6 @@
         </div>
     </footer>
 
-    <script src="/assets/js/script.js"></script>
-    <script src="/assets/js/contact.js"></script>
+    <script src="../assets/js/script.js"></script>
 </body>
 </html>

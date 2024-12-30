@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Menu - Village Chef</title>
-    <link rel="stylesheet" href="/assets/css/menu.css">
-    <link rel="stylesheet" href="/assets/css/styles.css">
+    <link rel="stylesheet" href="../assets/css/menu.css">
+    <link rel="stylesheet" href="../assets/css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
@@ -17,10 +17,10 @@
                 <span><span class="highlight">Village</span> CHEF</span>
             </div>
             <ul class="nav-links">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="about.html">About Us</a></li>
-                <li><a href="menu.html">Menu</a></li>
-                <li><a href="contact.html">Contact</a></li>
+                <li><a href="index.php">Home</a></li>
+                <li><a href="about.php">About Us</a></li>
+                <li><a href="menu.php">Menu</a></li>
+                <li><a href="contact.php">Contact</a></li>
             </ul>
             <div class="nav-right">
                 <div class="search-icon"><i class="fa fa-search" aria-hidden="true"></i></div>
@@ -129,7 +129,7 @@
                 <ul>
                     <li><a href="menu.html">Our Menu</a></li>
                     <li><a href="#offers">Special Offers</a></li>
-                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="about.php">About Us</a></li>
                     <li><a href="#gallery">Gallery</a></li>
                 </ul>
             </div>
@@ -158,6 +158,6 @@
         </div>
     </footer>
 
-    <script src="/assets/js/script.js"></script>
+    <script src="../assets/js/script.js"></script>
 </body>
 </html>
