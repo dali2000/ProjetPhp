@@ -32,7 +32,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             error_log("Login successful for user: " . $email);
             $_SESSION['user_id'] = $row['id'];
             $_SESSION['role'] = $row['role'];
-            header("location: ../../php/index.php");
+            header("location: ../../php/menu.php");
             exit();
         } else {
             error_log("Login failed for user: " . $email);
