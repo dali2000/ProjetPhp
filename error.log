@@ -1,0 +1,2 @@
+[2025-01-12 13:18:14] Erreur: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`apprestaurent`.`itemcommande`, CONSTRAINT `itemcommande_ibfk_1` FOREIGN KEY (`idCommande`) REFERENCES `commande` (`id`))
+[2025-01-12 13:18:31] Erreur: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`apprestaurent`.`itemcommande`, CONSTRAINT `itemcommande_ibfk_1` FOREIGN KEY (`idCommande`) REFERENCES `commande` (`id`))

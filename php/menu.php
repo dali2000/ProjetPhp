@@ -1,6 +1,6 @@
 <?php
 include '../classes/Produit.php';
-
+session_start();
 $produitClass = new Produit();
 $products = $produitClass->getProduits();
 ?>
