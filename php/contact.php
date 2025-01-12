@@ -1,3 +1,27 @@
+<?php
+include_once '../config/Database.php';
+include_once '../classes/Contact.php';
+
+$database = new Database();
+$db = $database->getConnection();
+
+$contact = new Contact($db);
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $contact->name = $_POST['name'];
+    $contact->email = $_POST['email'];
+    $contact->subject = $_POST['subject'];
+    $contact->message = $_POST['message'];
+
+    if($contact->create()) {
+        $success_message = "Your message has been sent successfully!";
+    } else {
+        $error_message = "Unable to send your message. Please try again.";
+    }
+}
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -40,7 +64,17 @@
         <section class="contact-content">
             <div class="contact-form">
                 <h2>Send us a message</h2>
-                <form id="contactForm">
+                <?php if(isset($success_message)): ?>
+                    <div class="alert alert-success">
+                        <?php echo $success_message; ?>
+                    </div>
+                <?php endif; ?>
+                <?php if(isset($error_message)): ?>
+                    <div class="alert alert-danger">
+                        <?php echo $error_message; ?>
+                    </div>
+                <?php endif; ?>
+                <form id="contactForm" method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
                     <div class="form-group">
                         <label for="name">Name</label>
                         <input type="text" id="name" name="name" required>
@@ -127,7 +161,5 @@
         </div>
     </footer>
 
-    <script src="../assets/js/script.js"></script>
-    <script src="../assets/js/contact.js"></script>
 </body>
 </html>
