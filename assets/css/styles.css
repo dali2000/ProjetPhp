@@ -72,8 +72,11 @@ nav {
     height: 24px;
     cursor: pointer;
     color: white;
+    text-decoration: none;
 }
-
+a {
+    text-decoration: none;
+}
 .login-btn {
     background-color: #FFA500;
     color: white;
@@ -291,6 +294,66 @@ footer {
     border-top: 1px solid #333;
     text-align: center;
     color: #666;
+}
+
+.contact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(600px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+.contact-card {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    transition: transform 0.3s ease;
+}
+.contact-card:hover {
+    transform: translateY(-5px);
+}
+.contact-card h3 {
+    margin-top: 0;
+    color: #333;
+    font-size: 1.2em;
+}
+.contact-info {
+    margin-bottom: 15px;
+}
+.contact-info p {
+    margin: 5px 0;
+    color: #666;
+}
+.contact-message {
+    background-color: #5f5d5d;
+    border-left: 4px solid #007bff;
+    padding: 10px;
+    margin-bottom: 15px;
+}
+.contact-actions {
+    display: flex;
+    justify-content: flex-end;
+}
+.contact-actions a {
+    margin-left: 10px;
+    text-decoration: none;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 0.9em;
+}
+.edit-btn {
+    background-color: #28a745;
+}
+.delete-btn {
+    background-color: #dc3545;
+}
+.success-message {
+    background-color: #d4edda;
+    color: #155724;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 4px;
 }
 
 /* Responsive design */

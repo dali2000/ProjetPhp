@@ -39,7 +39,9 @@
 }
 
 .about-image img {
-    width: 100%;
+    width: 90%;
+    display: block;
+    margin: auto;
     height: auto;
     border-radius: 10px;
 }
