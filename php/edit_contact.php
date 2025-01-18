@@ -50,20 +50,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-<header>
-    <nav>
-        <div class="logo">
-            <div class="logo-img"></div>
-            <span><span class="highlight">Village</span> CHEF</span>
-        </div>
-        <ul class="nav-links">
-            <li><a href="index.php">Home</a></li>
-            <li><a href="about.php">About Us</a></li>
-            <li><a href="menu.php">Menu</a></li>
-            <li><a href="contact.php">Contact</a></li>
-        </ul>
-    </nav>
-</header>
+<?php include_once './utils/navbar.php' ?>
+
 
 <main>
     <section class="contact-hero">
@@ -105,32 +93,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </section>
 </main>
 
-<footer>
-    <div class="footer-content">
-        <div class="footer-section">
-            <div class="footer-logo">
-                <div class="logo-img"></div>
-                <span><span class="highlight">Village</span> CHEF</span>
-            </div>
-            <p>Experience the best cuisine delivered right to your doorstep.</p>
-        </div>
-        <div class="footer-section">
-            <h3>Quick Links</h3>
-            <ul>
-                <li><a href="index.php">Home</a></li>
-                <li><a href="about.php">About Us</a></li>
-                <li><a href="menu.php">Menu</a></li>
-                <li><a href="contact.php">Contact</a></li>
-            </ul>
-        </div>
-        <div class="footer-section">
-            <h3>Contact Us</h3>
-            <p>123 Restaurant Street, Food City, FC 12345</p>
-            <p>Phone: (123) 456-7890</p>
-            <p>Email: info@villagechef.com</p>
-        </div>
-    </div>
-</footer>
+<?php include_once './utils/footer.php' ?>
+
 </body>
 </html>
 

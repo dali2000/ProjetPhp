@@ -14,10 +14,7 @@ function logError($message) {
 }
 
 // Vérifie si l'utilisateur est connecté
-if (!isset($_SESSION['user_id'])) {
-    echo json_encode(['error' => 'Utilisateur non connecté']);
-    exit();
-}
+
 
 $commande = new Cammande();
 $itemsCommande = new ItemCommande();
@@ -79,25 +76,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 <body>
 <!-- Header -->
-<header>
-    <nav>
-        <div class="logo">
-            <div class="logo-img"></div>
-            <span><span class="highlight">Village</span> CHEF</span>
-        </div>
-        <ul class="nav-links">
-            <li><a href="index.php">Home</a></li>
-            <li><a href="about.php">About Us</a></li>
-            <li><a href="menu.php">Menu</a></li>
-            <li><a href="contact.php">Contact</a></li>
-        </ul>
-        <div class="nav-right">
-            <div class="search-icon"><i class="fa fa-search" aria-hidden="true"></i></div>
-            <div class="cart-icon"><i class="fa fa-shopping-cart" aria-hidden="true"></i></div>
-            <button class="login-btn"><i class="fa fa-sign-in" aria-hidden="true"></i>Login</button>
-        </div>
-    </nav>
-</header>
+<?php include_once './utils/navbar.php' ?>
+
 
 <!-- Cart Section -->
 <main>
@@ -131,28 +111,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
     </section>
 
-    <section class="delivery-info">
-        <h2>Delivery Information</h2>
-        <form id="delivery-form">
-            <div class="form-group">
-                <label for="address">Delivery Address</label>
-                <input type="text" id="address" name="address" required>
-            </div>
-            <div class="form-group">
-                <label for="phone">Phone Number</label>
-                <input type="tel" id="phone" name="phone" required>
-            </div>
-            <div class="form-group">
-                <label for="instructions">Delivery Instructions (Optional)</label>
-                <textarea id="instructions" name="instructions"></textarea>
-            </div>
-        </form>
-    </section>
 </main>
 
 <!-- Footer -->
 <footer>
-    <!-- Footer content remains unchanged -->
+    <?php include_once './utils/footer.php' ?>
 </footer>
 <script src="../assets/js/cart.js"></script>
 </body>

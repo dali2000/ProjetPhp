@@ -10,26 +10,7 @@
 </head>
 <body>
     <!-- Header -->
-    <header>
-        <nav>
-            <div class="logo">
-                <div class="logo-img"></div>
-                <span><span class="highlight">Village</span> CHEF</span>
-            </div>
-            <ul class="nav-links">
-                <li><a href="index.php">Home</a></li>
-                <li><a href="about.html">About Us</a></li>
-                <li><a href="menu.php">Menu</a></li>
-                <li><a href="contact.php">Contact</a></li>
-            </ul>
-            <div class="nav-right">
-                <div class="search-icon"><i class="fa fa-search" aria-hidden="true"></i></div>
-                <div class="cart-icon"><i class="fa fa-shopping-cart" aria-hidden="true"></i></div>
-                <button class="login-btn"><i class="fa fa-sign-in" aria-hidden="true"></i>Login</button>
-            </div>
-        </nav>
-    </header>
-
+    <?php include_once './utils/navbar.php' ?>
     <!-- About Us Section -->
     <main>
         <section class="about-hero">
@@ -44,7 +25,7 @@
                 <p>Today, we've grown into a beloved culinary destination, known for our farm-to-table approach and commitment to quality. We source our ingredients from local farmers and artisans, ensuring that every dish is fresh, flavorful, and supports our community.</p>
             </div>
             <div class="about-image">
-                <img src="/img/restaurant-interior.jpg" alt="Village Chef Restaurant Interior" />
+                <img src="../assets/img/logo.png" alt="Village Chef Restaurant Interior" style="width:21rem;margin: auto;display: block"/>
             </div>
         </section>
 
@@ -78,22 +59,22 @@
             <h2>Meet Our Team</h2>
             <div class="team-grid">
                 <div class="team-member">
-                    <img src="/img/chef1.jpg" alt="Chef John Doe" />
+                    <img src="../assets/img/chef2.jpg" alt="Chef John Doe" />
                     <h3>John Doe</h3>
                     <p>Head Chef</p>
                 </div>
                 <div class="team-member">
-                    <img src="/img/chef2.jpg" alt="Chef Jane Smith" />
+                    <img src="../assets/img/chef1.jpg" alt="Chef Jane Smith" />
                     <h3>Jane Smith</h3>
                     <p>Pastry Chef</p>
                 </div>
                 <div class="team-member">
-                    <img src="/img/manager.jpg" alt="Manager Mike Johnson" />
+                    <img src="../assets/img/manager.jpg" alt="Manager Mike Johnson" />
                     <h3>Mike Johnson</h3>
                     <p>Restaurant Manager</p>
                 </div>
                 <div class="team-member">
-                    <img src="/img/sommelier.jpg" alt="Sommelier Sarah Brown" />
+                    <img src="../assets/img/sommelier.jpg" alt="Sommelier Sarah Brown" />
                     <h3>Sarah Brown</h3>
                     <p>Sommelier</p>
                 </div>
@@ -101,52 +82,9 @@
         </section>
     </main>
 
-    <!-- Footer -->
-    <footer>
-        <div class="footer-content">
-            <div class="footer-section">
-                <div class="footer-logo">
-                    <div class="logo-img"></div>
-                    <span><span class="highlight">Village</span> CHEF</span>
-                </div>
-                <p>Experience the best cuisine delivered right to your doorstep.</p>
-            </div>
+    <?php include_once './utils/footer.php' ?>
 
-            <div class="footer-section">
-                <h3>Quick Links</h3>
-                <ul>
-                    <li><a href="#menu">Our Menu</a></li>
-                    <li><a href="#offers">Special Offers</a></li>
-                    <li><a href="about.html">About Us</a></li>
-                    <li><a href="#gallery">Gallery</a></li>
-                </ul>
-            </div>
-
-            <div class="footer-section">
-                <h3>Contact Us</h3>
-                <div class="contact-info">
-                    <p>123 Restaurant Street</p>
-                    <p>Food City, FC 12345</p>
-                    <p>Phone: (123) 456-7890</p>
-                    <p>Email: info@villagechef.com</p>
-                </div>
-            </div>
-
-            <div class="footer-section">
-                <h3>Newsletter</h3>
-                <p>Subscribe for special offers and updates</p>
-                <div class="newsletter-form">
-                    <input type="email" placeholder="Enter your email">
-                    <button type="submit">Subscribe</button>
-                </div>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; 2023 Village Chef. All rights reserved.</p>
-        </div>
-    </footer>
-
-    <script src="../assets/js/script.js"></script>
+    <script src="../assetsjs/script.js"></script>
     <script src="../assets/js/about.js"></script>
 </body>
 </html>
