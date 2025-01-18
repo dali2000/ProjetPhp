@@ -148,5 +148,28 @@ if (isset($success_message)) {
         <?php endif; ?>
     </script>
 
+    <div id="alert" class="alert">
+        <span id="alertMessage"></span>
+    </div>
+
+    <script>
+        function showAlert(message, type) {
+            const alert = document.getElementById('alert');
+            const alertMessage = document.getElementById('alertMessage');
+
+            alert.className = 'alert alert-' + type;
+            alertMessage.textContent = message;
+            alert.style.display = 'block';
+
+            setTimeout(() => {
+                alert.style.display = 'none';
+            }, 5000);
+        }
+
+        <?php if ($alert_message && $alert_type): ?>
+        showAlert('<?php echo addslashes($alert_message); ?>', '<?php echo $alert_type; ?>');
+        <?php endif; ?>
+    </script>
+
 </body>
 </html>
