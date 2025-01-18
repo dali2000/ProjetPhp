@@ -65,29 +65,34 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <!-- Registration Form -->
 <main>
+    <br><br><br><br><br>
     <section class="auth-form">
         <h2>Register for Village Chef</h2>
         <?php
-        if(!empty($register_err)){
-            echo '<div class="alert alert-danger">' . $register_err . '</div>';
+        if (!empty($register_err)) {
+            echo '<div class="alert">' . $register_err . '</div>';
         }
         ?>
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
             <div class="form-group">
+                <i class="fas fa-user"></i>
                 <label for="nom">Last Name</label>
-                <input type="text" id="nom" name="nom" required>
+                <input type="text" id="nom" name="nom" placeholder="Enter your last name" required>
             </div>
             <div class="form-group">
+                <i class="fas fa-user"></i>
                 <label for="prenom">First Name</label>
-                <input type="text" id="prenom" name="prenom" required>
+                <input type="text" id="prenom" name="prenom" placeholder="Enter your first name" required>
             </div>
             <div class="form-group">
+                <i class="fas fa-envelope"></i>
                 <label for="email">Email</label>
-                <input type="email" id="email" name="email" required>
+                <input type="email" id="email" name="email" placeholder="Enter your email" required>
             </div>
             <div class="form-group">
+                <i class="fas fa-lock"></i>
                 <label for="password">Password</label>
-                <input type="password" id="password" name="password" required>
+                <input type="password" id="password" name="password" placeholder="Create a password" required>
             </div>
             <button type="submit" class="btn">Register</button>
         </form>

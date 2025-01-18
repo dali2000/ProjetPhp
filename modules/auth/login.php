@@ -54,13 +54,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="stylesheet" href="../../assets/css/styles.css">
     <link rel="stylesheet" href="../../assets/css/auth.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
 </head>
 <body>
 <!-- Header -->
 <header>
     <nav>
         <div class="logo">
-            <div class="logo-img"></div>
+            <div class="logo-img"> <img class="logo-img" src="../../assets/img/logo.png" alt="Village Chef Restaurant Interior" /></div>
             <span><span class="highlight">Village</span> CHEF</span>
         </div>
         <ul class="nav-links">
@@ -74,26 +75,31 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <!-- Login Form -->
 <main>
-    <section class="auth-form">
-        <h2>Login to Village Chef</h2>
-        <?php
-        if(!empty($login_err)){
-            echo '<div class="alert alert-danger">' . $login_err . '</div>';
-        }
-        ?>
-        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-            <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" id="email" name="email" required>
-            </div>
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" id="password" name="password" required>
-            </div>
-            <button type="submit" class="btn">Login</button>
-        </form>
-        <p>Don't have an account? <a href="register.php">Register here</a></p>
-    </section>
+    <div class="container">
+        <div class="auth-form">
+            <h2>Login to Village Chef</h2>
+            <!-- Display Error Message -->
+            <?php if (!empty($login_err)) : ?>
+                <div class="alert"><?php echo $login_err; ?></div>
+            <?php endif; ?>
+
+            <!-- Login Form -->
+            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" placeholder="Enter your email" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                </div>
+                <button type="submit" class="btn">Login</button>
+            </form>
+
+            <!-- Additional Links -->
+            <p>Don't have an account? <a href="register.php">Register here</a></p>
+        </div>
+    </div>
 </main>
 
 <!-- Footer -->
@@ -121,6 +127,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <p>Phone: (123) 456-7890</p>
             <p>Email: info@villagechef.com</p>
         </div>
+    </div>
+
+    <div class="falling-icons">
+        <i class="fa fa-bars hamburger-icon"></i>
+        <i class="fa-solid fa-pizza-slice pizza-icon"></i>
     </div>
 </footer>
 </body>
