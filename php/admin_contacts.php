@@ -8,6 +8,19 @@ $db = $database->getConnection();
 $contact = new Contact($db);
 $stmt = $contact->read();
 
+$alert_message = '';
+$alert_type = '';
+$updated_id = null;
+if (isset($_GET['message'])) {
+    $alert_message = $_GET['message'];
+    $alert_type = 'success';
+    if (isset($_GET['updated_id'])) {
+        $updated_id = $_GET['updated_id'];
+    }
+} elseif (isset($_GET['error'])) {
+    $alert_message = $_GET['error'];
+    $alert_type = 'error';
+}
 ?>
 
 <!DOCTYPE html>
@@ -60,8 +73,38 @@ $stmt = $contact->read();
         </div>
     </section>
 </main>
-
 <?php include_once './utils/footer.php' ?>
+<div id="alert" class="alert">
+    <span id="alertMessage"></span>
+</div>
+
+<script>
+    function showAlert(message, type) {
+        const alert = document.getElementById('alert');
+        const alertMessage = document.getElementById('alertMessage');
+
+        alert.className = 'alert alert-' + type;
+        alertMessage.textContent = message;
+        alert.style.display = 'block';
+
+        setTimeout(() => {
+            alert.style.display = 'none';
+        }, 5000);
+    }
+
+    <?php if ($alert_message && $alert_type): ?>
+    showAlert('<?php echo addslashes($alert_message); ?>', '<?php echo $alert_type; ?>');
+    <?php endif; ?>
+
+    <?php if ($updated_id): ?>
+    document.addEventListener('DOMContentLoaded', function() {
+        const updatedContact = document.getElementById('contact-<?php echo $updated_id; ?>');
+        if (updatedContact) {
+            updatedContact.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+    });
+    <?php endif; ?>
+</script>
 
 </body>
 </html>

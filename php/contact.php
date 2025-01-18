@@ -19,6 +19,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $error_message = "Unable to send your message. Please try again.";
     }
 }
+$alert_message = '';
+$alert_type = '';
+if (isset($success_message)) {
+    $alert_message = $success_message;
+    $alert_type = 'success';
+} elseif (isset($error_message)) {
+    $alert_message = $error_message;
+    $alert_type = 'error';
+}
 ?>
 
 
@@ -31,6 +40,29 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="stylesheet" href="../assets/css/styles.css">
     <link rel="stylesheet" href="../assets/css/contact.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        .alert {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 15px;
+            border-radius: 4px;
+            color: white;
+            font-weight: bold;
+            z-index: 1000;
+            display: none;
+            width: 80%;
+            max-width: 600px;
+            text-align: center;
+        }
+        .alert-success {
+            background-color: #28a745;
+        }
+        .alert-error {
+            background-color: #dc3545;
+        }
+    </style>
 </head>
 <body>
     <!-- Header -->
@@ -47,16 +79,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <section class="contact-content">
             <div class="contact-form">
                 <h2>Send us a message</h2>
-                <?php if(isset($success_message)): ?>
-                    <div class="alert alert-success">
-                        <?php echo $success_message; ?>
-                    </div>
-                <?php endif; ?>
-                <?php if(isset($error_message)): ?>
-                    <div class="alert alert-danger">
-                        <?php echo $error_message; ?>
-                    </div>
-                <?php endif; ?>
                 <form id="contactForm" method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
                     <div class="form-group">
                         <label for="name">Name</label>
@@ -102,6 +124,29 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <!-- Footer -->
     <?php include_once './utils/footer.php' ?>
 
+
+    <div id="alert" class="alert">
+        <span id="alertMessage"></span>
+    </div>
+
+    <script>
+        function showAlert(message, type) {
+            const alert = document.getElementById('alert');
+            const alertMessage = document.getElementById('alertMessage');
+
+            alert.className = 'alert alert-' + type;
+            alertMessage.textContent = message;
+            alert.style.display = 'block';
+
+            setTimeout(() => {
+                alert.style.display = 'none';
+            }, 5000);
+        }
+
+        <?php if ($alert_message && $alert_type): ?>
+        showAlert('<?php echo addslashes($alert_message); ?>', '<?php echo $alert_type; ?>');
+        <?php endif; ?>
+    </script>
 
 </body>
 </html>

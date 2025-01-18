@@ -15,7 +15,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $contact->message = $_POST['message'];
 
     if($contact->update()) {
-        $success_message = "Contact updated successfully.";
+        header("Location: admin_contacts.php?message=" . urlencode("Contact updated successfully") . "&updated_id=" . $contact->id);
+        exit();
     } else {
         $error_message = "Unable to update contact. Please try again.";
     }
@@ -37,6 +38,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     echo "No ID specified.";
     exit;
 }
+
+$alert_message = '';
+$alert_type = '';
+if (isset($success_message)) {
+    $alert_message = $success_message;
+    $alert_type = 'success';
+} elseif (isset($error_message)) {
+    $alert_message = $error_message;
+    $alert_type = 'error';
+}
 ?>
 
 <!DOCTYPE html>
@@ -48,6 +59,30 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="stylesheet" href="../assets/css/styles.css">
     <link rel="stylesheet" href="../assets/css/contact.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* ... (keep existing styles) ... */
+        .alert {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 15px;
+            border-radius: 4px;
+            color: white;
+            font-weight: bold;
+            z-index: 1000;
+            display: none;
+            width: 80%;
+            max-width: 600px;
+            text-align: center;
+        }
+        .alert-success {
+            background-color: #28a745;
+        }
+        .alert-error {
+            background-color: #dc3545;
+        }
+    </style>
 </head>
 <body>
 <?php include_once './utils/navbar.php' ?>
@@ -61,13 +96,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <section class="contact-content">
         <div class="contact-form">
-            <?php
-            if (isset($success_message)) {
-                echo "<p class='success-message'>$success_message</p>";
-            } elseif (isset($error_message)) {
-                echo "<p class='error-message'>$error_message</p>";
-            }
-            ?>
+<!--            --><?php
+//            if (isset($success_message)) {
+//                echo "<p class='success-message'>$success_message</p>";
+//            } elseif (isset($error_message)) {
+//                echo "<p class='error-message'>$error_message</p>";
+//            }
+//            ?>
             <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
                 <input type="hidden" name="id" value="<?php echo $contact->id; ?>">
                 <div class="form-group">
@@ -92,8 +127,29 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
     </section>
 </main>
-
 <?php include_once './utils/footer.php' ?>
+<div id="alert" class="alert">
+    <span id="alertMessage"></span>
+</div>
+
+<script>
+    function showAlert(message, type) {
+        const alert = document.getElementById('alert');
+        const alertMessage = document.getElementById('alertMessage');
+
+        alert.className = 'alert alert-' + type;
+        alertMessage.textContent = message;
+        alert.style.display = 'block';
+
+        setTimeout(() => {
+            alert.style.display = 'none';
+        }, 5000);
+    }
+
+    <?php if ($alert_message && $alert_type): ?>
+    showAlert('<?php echo addslashes($alert_message); ?>', '<?php echo $alert_type; ?>');
+    <?php endif; ?>
+</script>
 
 </body>
 </html>
