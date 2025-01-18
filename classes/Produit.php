@@ -12,8 +12,28 @@ class Produit
 
     public function getProduits()
     {
-        return $this->db->query('SELECT * FROM produit');
+        $query = "
+        SELECT 
+            p.id, 
+            p.nomProduit, 
+            p.description, 
+            p.prix, 
+            p.QteStock, 
+            p.vendeurId, 
+            p.idCategorie, 
+            c.nomCategorie as categorie, 
+            p.img
+        FROM 
+            produit p
+        INNER JOIN 
+            categorie c
+        ON 
+            p.idCategorie = c.id
+    ";
+
+        return $this->db->query($query)->fetchAll(\PDO::FETCH_ASSOC);
     }
+
 
     public function getProduitById($id)
     {

@@ -1,8 +1,12 @@
 <?php
 include '../classes/Produit.php';
+include '../classes/Categorie.php';
 session_start();
 $produitClass = new Produit();
+$categorieClass = new Categorie();
 $products = $produitClass->getProduits();
+$categories = $categorieClass->getCategorie();
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -26,23 +30,24 @@ $products = $produitClass->getProduits();
 
         <section class="menu-content">
             <div class="menu-filters">
-                <input type="text" id="search-input" placeholder="Search menu items...">
+                <input type="text" id="search-input" placeholder="Rechercher des plats...">
                 <div class="filter-buttons">
-                    <button class="filter-btn active" data-filter="all">All</button>
-                    <button class="filter-btn" data-filter="appetizers">Appetizers</button>
-                    <button class="filter-btn" data-filter="main-course">Main Course</button>
-                    <button class="filter-btn" data-filter="desserts">Desserts</button>
-                    <button class="filter-btn" data-filter="drinks">Drinks</button>
+                    <?php foreach ($categories as $category): ?>
+                        <button class="filter-btn" data-filter="<?php echo htmlspecialchars(strtolower($category['nomCategorie'])); ?>">
+                            <?php echo htmlspecialchars($category['nomCategorie']); ?>
+                        </button>
+                    <?php endforeach; ?>
                 </div>
             </div>
 
             <div class="menu-items">
                 <?php foreach ($products as $product): ?>
-                    <div class="menu-item" data-id="<?php echo $product['id']; ?>"> <!-- Ajoutez le data-id ici -->
-                        <img src="../assets/img/pizza.png" alt="Village Special Burger">
+                    <div class="menu-item" data-id="<?php echo htmlspecialchars($product['id']); ?>">
+                        <img src="../assets/img/<?php echo htmlspecialchars($product['img']); ?>" alt="<?php echo htmlspecialchars($product['nomProduit']); ?>">
                         <div class="menu-item-content">
-                            <h3><?php echo $product['nomProduit']; ?></h3>
-                            <p class="price"><?php echo $product['prix']; ?>$</p>
+                            <h3><?php echo htmlspecialchars($product['nomProduit']); ?></h3>
+                            <h4><?php echo htmlspecialchars($product['categorie']); ?></h4>
+                            <p class="price"><?php echo htmlspecialchars($product['prix']); ?>€</p>
                             <div class="quantity-control">
                                 <button class="quantity-btn minus" data-id="<?php echo $product['id']; ?>">-</button>
                                 <input type="number" class="quantity-input" value="1" min="1" max="10">

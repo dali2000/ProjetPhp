@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const quantityButtons = document.querySelectorAll('.quantity-btn');
     const searchInput = document.getElementById('search-input');
     const menuItems = document.querySelectorAll('.menu-item');
+    const filterButtons = document.querySelectorAll('.filter-btn');
 
     // Fonction pour ajouter au panier
     function addToCart(productId, quantity) {
@@ -96,4 +97,72 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
+    function filterAndSearchMenu() {
+        const searchTerm = searchInput.value.toLowerCase();
+        const activeCategory = document.querySelector('.filter-btn.active')?.getAttribute('data-filter') || 'all';
+
+        console.log('Filtering with:', { searchTerm, activeCategory });
+
+        let visibleItems = 0;
+        menuItems.forEach(item => {
+            const productName = item.querySelector('h3').textContent.toLowerCase();
+            const itemCategory = item.querySelector('h4').textContent.trim().toLowerCase();
+            const matchesSearch = productName.includes(searchTerm);
+            const matchesCategory = activeCategory === 'all' || itemCategory === activeCategory.toLowerCase();
+
+            console.log('Item:', productName, 'Category:', itemCategory, 'Matches:', { matchesSearch, matchesCategory });
+
+            if (matchesSearch && matchesCategory) {
+                item.style.display = 'flex';
+                visibleItems++;
+            } else {
+                item.style.display = 'none';
+            }
+        });
+
+        console.log('Visible items after filtering:', visibleItems);
+    }
+
+    searchInput.addEventListener('input', filterAndSearchMenu);
+
+    filterButtons.forEach(button => {
+        button.addEventListener('click', (event) => {
+            event.preventDefault(); // Prevent any default button behavior
+            console.log('Button clicked:', button.textContent);
+            console.log('Filter value:', button.getAttribute('data-filter'));
+
+            filterButtons.forEach(btn => btn.classList.remove('active'));
+            button.classList.add('active');
+
+            console.log('Active category after click:', button.getAttribute('data-filter'));
+
+            filterAndSearchMenu();
+        });
+    });
+
+    // Add 'all' button programmatically if it doesn't exist
+    if (!document.querySelector('.filter-btn[data-filter="all"]')) {
+        console.log('Adding "All" button');
+        const allButton = document.createElement('button');
+        allButton.className = 'filter-btn active';
+        allButton.setAttribute('data-filter', 'all');
+        allButton.textContent = 'Tous';
+        document.querySelector('.filter-buttons').prepend(allButton);
+
+        allButton.addEventListener('click', (event) => {
+            event.preventDefault();
+            console.log('All button clicked');
+            filterButtons.forEach(btn => btn.classList.remove('active'));
+            allButton.classList.add('active');
+            filterAndSearchMenu();
+        });
+    }
+
+    // Initialize with 'all' category
+    console.log('Initializing with "all" category');
+    filterAndSearchMenu();
+
+    // Log initial active category
+    const initialActiveCategory = document.querySelector('.filter-btn.active')?.getAttribute('data-filter');
+    console.log('Initial active category:', initialActiveCategory);
 });
