@@ -1,6 +1,7 @@
 <?php
 include_once '../config/Database.php';
 include_once '../classes/Contact.php';
+session_start();
 
 $database = new Database();
 $db = $database->getConnection();
