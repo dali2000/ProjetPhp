@@ -1,168 +1,105 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const cartButtons = document.querySelectorAll('.add-to-cart-btn');
-    const quantityButtons = document.querySelectorAll('.quantity-btn');
-    const searchInput = document.getElementById('search-input');
-    const menuItems = document.querySelectorAll('.menu-item');
+document.addEventListener('DOMContentLoaded', function() {
+    const menuItems = [
+        { id: 1, name: 'Village Special Burger', category: 'main-course', price: 12.99, image: '/img/burger.jpg' },
+        { id: 2, name: 'Grilled Chicken Salad', category: 'appetizers', price: 9.99, image: '/img/salad.jpg' },
+        { id: 3, name: 'Chocolate Lava Cake', category: 'desserts', price: 6.99, image: '/img/cake.jpg' },
+        { id: 4, name: 'Fresh Fruit Smoothie', category: 'drinks', price: 4.99, image: '/img/smoothie.jpg' },
+        // Add more menu items as needed
+    ];
+
+    const menuItemsContainer = document.querySelector('.menu-items');
     const filterButtons = document.querySelectorAll('.filter-btn');
+    const searchInput = document.getElementById('search-input');
 
-    // Fonction pour ajouter au panier
-    function addToCart(productId, quantity) {
-        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    function renderMenuItems(items) {
+        menuItemsContainer.innerHTML = '';
+        items.forEach(item => {
+            const menuItem = document.createElement('div');
+            menuItem.classList.add('menu-item');
+            menuItem.innerHTML = `
+                <img src="${item.image}" alt="${item.name}">
+                <div class="menu-item-content">
+                    <h3>${item.name}</h3>
+                    <p class="price">$${item.price.toFixed(2)}</p>
+                    <div class="quantity-control">
+                        <button class="quantity-btn minus">-</button>
+                        <input type="number" class="quantity-input" value="1" min="1" max="10">
+                        <button class="quantity-btn plus">+</button>
+                    </div>
+                    <button class="add-to-cart-btn" data-id="${item.id}">Add to Cart</button>
+                </div>
+            `;
+            menuItemsContainer.appendChild(menuItem);
+        });
+    }
 
-        const existingProductIndex = cart.findIndex(item => item.id === productId);
-
-        if (existingProductIndex > -1) {
-            // Si le produit existe déjà, on met à jour la quantité
-            cart[existingProductIndex].quantity += quantity;
+    function filterMenuItems(category) {
+        if (category === 'all') {
+            renderMenuItems(menuItems);
         } else {
-            // Si le produit n'existe pas, on l'ajoute avec toutes les informations
-            const productElement = document.querySelector(`.menu-item[data-id='${productId}']`);
-            const productName = productElement.querySelector('h3').textContent;
-            const productPrice = productElement.querySelector('.price').textContent;
-            const productImage = productElement.querySelector('img').src;
-
-            cart.push({
-                id: productId,
-                name: productName,
-                price: parseFloat(productPrice.replace('$', '')), // Convertir le prix en nombre
-                quantity: quantity,
-                image: productImage
-            });
-        }
-
-        // Sauvegarder le panier mis à jour dans localStorage
-        localStorage.setItem('cart', JSON.stringify(cart));
-    }
-
-
-    // Fonction pour mettre à jour la quantité du produit
-    function updateQuantity(productId, quantity) {
-        let cart = JSON.parse(localStorage.getItem('cart')) || [];
-
-        const existingProductIndex = cart.findIndex(item => item.id === productId);
-        if (existingProductIndex > -1) {
-            if (quantity > 0) {
-                cart[existingProductIndex].quantity = quantity;
-            } else {
-                cart.splice(existingProductIndex, 1);
-            }
+            const filteredItems = menuItems.filter(item => item.category === category);
+            renderMenuItems(filteredItems);
         }
 
         localStorage.setItem('cart', JSON.stringify(cart));
     }
 
-    // Gestion des boutons "plus" et "moins"
-    quantityButtons.forEach(button => {
-        button.addEventListener('click', (event) => {
-            const productId = button.getAttribute('data-id');
-            const quantityInput = button.closest('.quantity-control').querySelector('.quantity-input');
-            let quantity = parseInt(quantityInput.value);
-
-            if (button.classList.contains('plus')) {
-                quantity += 1;
-            } else if (button.classList.contains('minus') && quantity > 1) {
-                quantity -= 1;
-            }
-
-            quantityInput.value = quantity;
-
-            updateQuantity(productId, quantity);
-        });
-    });
-
-    // Événement pour ajouter un produit au panier
-    cartButtons.forEach(button => {
-        button.addEventListener('click', (event) => {
-            const productId = button.getAttribute('data-id');
-            const quantityInput = button.previousElementSibling.querySelector('.quantity-input');
-            const quantity = parseInt(quantityInput.value);
-
-            if (quantity > 0) {
-                addToCart(productId, quantity);
-                alert('Produit ajouté au panier');
-            }
-        });
-    });
-
-    // Fonction de filtrage par nom de produit
-    searchInput.addEventListener('input', (event) => {
-        const searchTerm = event.target.value.toLowerCase();
-
-        menuItems.forEach(item => {
-            const productName = item.querySelector('h3').textContent.toLowerCase();
-            if (productName.includes(searchTerm)) {
-                item.style.display = 'block';
-            } else {
-                item.style.display = 'none';
-            }
-        });
-    });
-    function filterAndSearchMenu() {
-        const searchTerm = searchInput.value.toLowerCase();
-        const activeCategory = document.querySelector('.filter-btn.active')?.getAttribute('data-filter') || 'all';
-
-        console.log('Filtering with:', { searchTerm, activeCategory });
-
-        let visibleItems = 0;
-        menuItems.forEach(item => {
-            const productName = item.querySelector('h3').textContent.toLowerCase();
-            const itemCategory = item.querySelector('h4').textContent.trim().toLowerCase();
-            const matchesSearch = productName.includes(searchTerm);
-            const matchesCategory = activeCategory === 'all' || itemCategory === activeCategory.toLowerCase();
-
-            console.log('Item:', productName, 'Category:', itemCategory, 'Matches:', { matchesSearch, matchesCategory });
-
-            if (matchesSearch && matchesCategory) {
-                item.style.display = 'flex';
-                visibleItems++;
-            } else {
-                item.style.display = 'none';
-            }
-        });
-
-        console.log('Visible items after filtering:', visibleItems);
+    function searchMenuItems(query) {
+        const searchedItems = menuItems.filter(item =>
+            item.name.toLowerCase().includes(query.toLowerCase())
+        );
+        renderMenuItems(searchedItems);
     }
-
-    searchInput.addEventListener('input', filterAndSearchMenu);
 
     filterButtons.forEach(button => {
-        button.addEventListener('click', (event) => {
-            event.preventDefault(); // Prevent any default button behavior
-            console.log('Button clicked:', button.textContent);
-            console.log('Filter value:', button.getAttribute('data-filter'));
-
+        button.addEventListener('click', () => {
             filterButtons.forEach(btn => btn.classList.remove('active'));
             button.classList.add('active');
-
-            console.log('Active category after click:', button.getAttribute('data-filter'));
-
-            filterAndSearchMenu();
+            filterMenuItems(button.getAttribute('data-filter'));
         });
     });
 
-    // Add 'all' button programmatically if it doesn't exist
-    if (!document.querySelector('.filter-btn[data-filter="all"]')) {
-        console.log('Adding "All" button');
-        const allButton = document.createElement('button');
-        allButton.className = 'filter-btn active';
-        allButton.setAttribute('data-filter', 'all');
-        allButton.textContent = 'Tous';
-        document.querySelector('.filter-buttons').prepend(allButton);
+    searchInput.addEventListener('input', (e) => {
+        searchMenuItems(e.target.value);
+    });
 
-        allButton.addEventListener('click', (event) => {
-            event.preventDefault();
-            console.log('All button clicked');
-            filterButtons.forEach(btn => btn.classList.remove('active'));
-            allButton.classList.add('active');
-            filterAndSearchMenu();
-        });
+    // Initial render
+    renderMenuItems(menuItems);
+
+    // Quantity control and Add to Cart functionality
+    menuItemsContainer.addEventListener('click', (e) => {
+        if (e.target.classList.contains('quantity-btn')) {
+            const input = e.target.parentElement.querySelector('.quantity-input');
+            if (e.target.classList.contains('plus')) {
+                input.value = Math.min(parseInt(input.value) + 1, 10);
+            } else if (e.target.classList.contains('minus')) {
+                input.value = Math.max(parseInt(input.value) - 1, 1);
+            }
+        } else if (e.target.classList.contains('add-to-cart-btn')) {
+            const itemId = e.target.getAttribute('data-id');
+            const quantity = e.target.parentElement.querySelector('.quantity-input').value;
+            addToCart(itemId, quantity);
+        }
+    });
+
+    function addToCart(itemId, quantity) {
+        const item = menuItems.find(item => item.id === parseInt(itemId));
+        if (item) {
+            const cartItem = {
+                id: item.id,
+                name: item.name,
+                price: item.price,
+                quantity: parseInt(quantity)
+            };
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const existingItemIndex = cart.findIndex(i => i.id === cartItem.id);
+            if (existingItemIndex > -1) {
+                cart[existingItemIndex].quantity += cartItem.quantity;
+            } else {
+                cart.push(cartItem);
+            }
+            localStorage.setItem('cart', JSON.stringify(cart));
+            alert(`Added ${quantity} ${item.name}(s) to cart!`);
+        }
     }
-
-    // Initialize with 'all' category
-    console.log('Initializing with "all" category');
-    filterAndSearchMenu();
-
-    // Log initial active category
-    const initialActiveCategory = document.querySelector('.filter-btn.active')?.getAttribute('data-filter');
-    console.log('Initial active category:', initialActiveCategory);
 });

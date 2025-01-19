@@ -17,12 +17,11 @@ class Produit
             p.id, 
             p.nomProduit, 
             p.description, 
-            p.prix, 
-            p.QteStock, 
+            p.prix,
             p.vendeurId, 
             p.idCategorie, 
-            c.nomCategorie as categorie, 
-            p.img
+            p.img,
+            c.nomCategorie as categorie
         FROM 
             produit p
         INNER JOIN 
@@ -42,51 +41,38 @@ class Produit
         return $result->fetch(\PDO::FETCH_ASSOC);
     }
 
-    public function addProduit($produit, $image)
-    {
-        $nomProduit = $produit['nomProduit'];
-        $description = $produit['description'];
-        $prix = $produit['prix'];
-        $qteStock = $produit['QteStock'];
-        $vendeurId = $produit['vendeurId'];
-        $idCategorie = $produit['idCategorie'];
+    public function addProduit($data) {
+        try {
+            // Préparer la requête SQL
+            $sql = "INSERT INTO produit (nomProduit, description, prix, vendeurId, idCategorie, img) 
+                VALUES (:nomProduit, :description, :prix, :vendeurId, :idCategorie, :img)";
+            $stmt = $this->db->prepare($sql);
 
-        // Vérification du fichier image
-        $targetDir = "../assets/uploads/"; // Le répertoire où stocker les images
-        $targetFile = $targetDir . basename($image["name"]); // Nom de fichier final
-        $imageFileType = strtolower(pathinfo($targetFile, PATHINFO_EXTENSION));
+            // Associer les valeurs (en évitant les injections SQL)
+            $stmt->bindParam(':nomProduit', $data['nomProduit'], PDO::PARAM_STR);
+            $stmt->bindParam(':description', $data['description'], PDO::PARAM_STR);
+            $stmt->bindParam(':prix', $data['prix'], PDO::PARAM_STR);
+            $stmt->bindParam(':img', $data['img'], PDO::PARAM_STR); // Correctement aligné avec :image
+            $stmt->bindParam(':vendeurId', $data['idVendeur'], PDO::PARAM_INT);
+            $stmt->bindParam(':idCategorie', $data['idCategorie'], PDO::PARAM_INT);
 
-        // Vérifier si le fichier est une image réelle
-        if (getimagesize($image["tmp_name"]) === false) {
-            return "Le fichier n'est pas une image.";
-        }
+            // Exécuter la requête
+            $stmt->execute();
 
-        // Vérifier l'extension de l'image
-        $allowedExtensions = ["jpg", "jpeg", "png", "gif"];
-        if (!in_array($imageFileType, $allowedExtensions)) {
-            return "Seules les images JPG, JPEG, PNG et GIF sont autorisées.";
-        }
-
-        // Déplacer l'image dans le répertoire de destination
-        if (move_uploaded_file($image["tmp_name"], $targetFile)) {
-            // Si l'image est bien déplacée, enregistrez l'URL de l'image dans la base de données
-            $imgUrl = $targetFile;
-
-            $query = "INSERT INTO produit (nomProduit, description, prix, QteStock, vendeurId, idCategorie, img) 
-                  VALUES ('$nomProduit', '$description', $prix, $qteStock, $vendeurId, $idCategorie, '$imgUrl')";
-            $this->db->exec($query);
-            return "Produit ajouté avec succès!";
-        } else {
-            return "Désolé, une erreur est survenue lors du téléchargement de l'image.";
+            return true; // Retourner true si l'ajout a réussi
+        } catch (PDOException $e) {
+            // Gestion des erreurs
+            echo "Erreur lors de l'ajout du produit : " . $e->getMessage();
+            return false;
         }
     }
+
 
     public function updateProduit($id, $produit, $image = null)
     {
         $nomProduit = $produit['nomProduit'];
         $description = $produit['description'];
         $prix = $produit['prix'];
-        $qteStock = $produit['QteStock'];
         $vendeurId = $produit['vendeurId'];
         $idCategorie = $produit['idCategorie'];
 
@@ -94,7 +80,6 @@ class Produit
               nomProduit = '$nomProduit', 
               description = '$description', 
               prix = $prix, 
-              QteStock = $qteStock, 
               vendeurId = $vendeurId, 
               idCategorie = $idCategorie";
 

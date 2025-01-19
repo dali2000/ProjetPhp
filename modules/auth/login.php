@@ -32,7 +32,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             error_log("Login successful for user: " . $email);
             $_SESSION['user_id'] = $row['id'];
             $_SESSION['role'] = $row['role'];
-            header("location: ../../php/menu.php");
+            $_SESSION['nom'] = $row['nom'];
+            $_SESSION['prenom'] = $row['prenom'];
+            if($row['role'] == 'admin' || $row['role'] == 'vendeur'){
+                header("location: ../../php/dashboard.php");
+            }else{
+                header("location: ../../php/menu.php");
+            }
             exit();
         } else {
             error_log("Login failed for user: " . $email);
