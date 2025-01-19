@@ -110,5 +110,30 @@ class User {
         }
         return false;
     }
+    // Read admin users
+    public function readVendeur() {
+        $query = "SELECT * FROM " . $this->table . " WHERE role = 'vendeur'";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        return $stmt;
+    }
+    public function updateRole() {
+        $query = "UPDATE " . $this->table . " SET role = :role WHERE id = :id";
+
+        $stmt = $this->conn->prepare($query);
+
+        // Sanitize inputs
+        $this->role = htmlspecialchars(strip_tags($this->role));
+        $this->id = htmlspecialchars(strip_tags($this->id));
+
+        // Bind parameters
+        $stmt->bindParam(':role', $this->role);
+        $stmt->bindParam(':id', $this->id);
+
+        if($stmt->execute()) {
+            return true;
+        }
+        return false;
+    }
 }
 

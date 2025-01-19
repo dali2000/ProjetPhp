@@ -75,7 +75,7 @@ $result = $user->read();
             </a>
             <div class="d-flex align-items-center ms-4 mb-4">
                 <div class="position-relative">
-                    <img class="rounded-circle" src="assets/img/user.jpg" alt="" style="width: 40px; height: 40px;">
+                    <img class="rounded-circle" src="../assets/img/user.jpg" alt="" style="width: 40px; height: 40px;">
                     <div class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
                 </div>
                 <div class="ms-3">
@@ -88,9 +88,6 @@ $result = $user->read();
                 <a href="users.php" class="nav-item nav-link active"><i class="fa fa-th me-2"></i>Users</a>
                 <a href="clients.php" class="nav-item nav-link"><i class="fa fa-keyboard me-2"></i>Clients</a>
                 <a href="categories.php" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Categories</a>
-                <a href="inscriptions.php" class="nav-item nav-link"><i class="fa fa-chart-bar me-2"></i>Inscriptions</a>
-                <a href="products.php" class="nav-item nav-link active"><i class="fa fa-chart-bar me-2"></i>Products</a>
-
             </div>
         </nav>
     </div>
@@ -100,7 +97,7 @@ $result = $user->read();
     <div class="content">
         <!-- Navbar Start -->
         <nav class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0">
-            <a href="index.php" class="navbar-brand d-flex d-lg-none me-4">
+            <a href="index.html" class="navbar-brand d-flex d-lg-none me-4">
                 <h2 class="text-primary mb-0"><i class="fa fa-hashtag"></i></h2>
             </a>
             <a href="#" class="sidebar-toggler flex-shrink-0">
@@ -130,7 +127,7 @@ $result = $user->read();
                 </div>
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                        <img class="rounded-circle me-lg-2" src="assets/img/user.jpg" alt="" style="width: 40px; height: 40px;">
+                        <img class="rounded-circle me-lg-2" src="../assets/img/user.jpg" alt="" style="width: 40px; height: 40px;">
                         <span class="d-none d-lg-inline-flex">John Doe</span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
@@ -143,20 +140,19 @@ $result = $user->read();
         </nav>
         <!-- Navbar End -->
 
-        <!-- Alert Message -->
-        <?php if (!empty($message)): ?>
-            <div class="alert alert-info alert-dismissible fade show" role="alert">
-                <?php echo $message; ?>
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        <?php endif; ?>
-
         <!-- User Table Start -->
         <div class="container-fluid pt-4 px-4">
             <div class="bg-light text-center rounded p-4">
                 <div class="d-flex align-items-center justify-content-between mb-4">
                     <h6 class="mb-0">Users</h6>
+                    <a href="../modules/user/create_user.php?role=vendeur" class="btn btn-sm btn-primary">Add New Vendeur</a>
                 </div>
+                <?php if (!empty($message)): ?>
+                    <div class="alert alert-info alert-dismissible fade show" role="alert">
+                        <?php echo $message; ?>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                <?php endif; ?>
                 <div class="table-responsive">
                     <table class="table text-start align-middle table-bordered table-hover mb-0">
                         <thead>
@@ -181,7 +177,7 @@ $result = $user->read();
                             echo '<td>';
                             echo '<form method="POST" style="display:inline;">';
                             echo '<input type="hidden" name="delete_id" value="' . htmlspecialchars($row['id']) . '">';
-                            echo '<button type="submit" class="btn btn-sm btn-danger">Delete</button>';
+                            echo '<button type="submit" class="btn btn-sm btn-danger" onclick="return confirm(\'Are you sure you want to delete this user?\')">Delete</button>';
                             echo '</form>';
                             echo '</td>';
                             echo '</tr>';
@@ -216,3 +212,4 @@ $result = $user->read();
 </body>
 
 </html>
+

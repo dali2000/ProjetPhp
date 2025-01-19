@@ -16,7 +16,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $user->nom = $_POST['nom'];
     $user->prenom = $_POST['prenom'];
     $user->email = $_POST['email'];
-    //Hash the password before storing it in the database.  This is a placeholder, use a strong hashing algorithm like password_hash() in a production environment.
     $user->password = $_POST['password']; // Store password as plain text
 
     $user->role = 'client'; // Default role for new users
