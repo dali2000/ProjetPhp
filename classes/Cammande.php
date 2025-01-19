@@ -33,7 +33,20 @@ class Cammande
     // Read All
     public function readAll()
     {
-        $sql = "SELECT * FROM commandes";
+        $sql = "SELECT 
+                commande.id,
+                commande.status,
+                commande.dateCommande,
+                commande.totalPrix,
+                user.nom,
+                user.prenom
+            FROM 
+                commande
+            JOIN 
+                user 
+            ON 
+                commande.idClient = user.id";
+
         $stmt = $this->db->query($sql);
 
         return $stmt->fetchAll(\PDO::FETCH_ASSOC);
@@ -42,7 +55,7 @@ class Cammande
     // Read by ID
     public function readById($id)
     {
-        $sql = "SELECT * FROM commandes WHERE id = :id";
+        $sql = "SELECT * FROM commande WHERE id = :id";
         $stmt = $this->db->prepare($sql);
         $stmt->bindParam(':id', $id, \PDO::PARAM_INT);
         $stmt->execute();
@@ -53,7 +66,7 @@ class Cammande
     // Update
     public function update($id, $data)
     {
-        $sql = "UPDATE commandes 
+        $sql = "UPDATE commande 
                 SET status = :status, dateCommande = :dateCommande, totalPrix = :totalPrix, idClient = :idClient 
                 WHERE id = :id";
         $stmt = $this->db->prepare($sql);
@@ -66,11 +79,23 @@ class Cammande
             ':id' => $id
         ]);
     }
+    public function valider($id)
+    {
+        $sql = "UPDATE commande 
+                SET status = :status
+                WHERE id = :id";
+        $stmt = $this->db->prepare($sql);
+
+        return $stmt->execute([
+            ':status' => 'valider',
+            ':id' => $id
+        ]);
+    }
 
     // Delete
     public function delete($id)
     {
-        $sql = "DELETE FROM commandes WHERE id = :id";
+        $sql = "DELETE FROM commande WHERE id = :id";
         $stmt = $this->db->prepare($sql);
         $stmt->bindParam(':id', $id, \PDO::PARAM_INT);
 

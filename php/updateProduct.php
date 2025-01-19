@@ -142,7 +142,7 @@ if (isset($_POST['addE'])) {
                     <a href="users.php" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Users</a>
                     <a href="clients.php" class="nav-item nav-link"><i class="fa fa-keyboard me-2"></i>Clients</a>
                     <a href="categories.php" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Categories</a>
-                    <a href="inscriptions.php" class="nav-item nav-link"><i class="fa fa-chart-bar me-2"></i>Inscriptions</a>
+                    <a href="commandes.php" class="nav-item nav-link"><i class="fa fa-chart-bar me-2"></i>Commands</a>
                     <a href="products.php" class="nav-item nav-link active"><i class="fa fa-chart-bar me-2"></i>Products</a>
                 </div>
             </nav>

@@ -49,7 +49,7 @@ $categories = $categorieClass->getCategorie();
             <div class="menu-items">
                 <?php foreach ($products as $product): ?>
                     <div class="menu-item" data-id="<?php echo $product['id']; ?>">
-                        <img src="../assets/img/<?php echo $product['img']; ?>" alt="<?php echo $product['nomProduit']; ?>">
+                        <img src="../assets/img/<?php echo htmlspecialchars($product['img']); ?>" alt="<?php echo $product['nomProduit']; ?>">
                         <div class="menu-item-content">
                             <h3><?php echo $product['nomProduit']; ?></h3>
                             <h4><?php echo $product['categorie']; ?></h4>

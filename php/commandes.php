@@ -1,8 +1,8 @@
 <?php
-include '../classes/Produit.php';
+include '../classes/Cammande.php';
 session_start();
-$produitClass = new Produit();
-$products = $produitClass->getProduits();
+$cammandeClass = new Cammande();
+$cammandes = $cammandeClass->readAll();
 if(isset($_SESSION['nom'])) {
     $userId = $_SESSION['user_id'];
     $nom = $_SESSION['nom'];
@@ -10,8 +10,12 @@ if(isset($_SESSION['nom'])) {
     $role = $_SESSION['role'];
 }
 if(isset($_GET['idE'])){
-    $produitClass->deleteProduit($_GET['idE']);
-    header("location:products.php");
+    $cammandeClass->delete($_GET['idE']);
+    header("location:commandes.php");
+}
+if(isset($_GET['idC'])){
+    $cammandeClass->valider($_GET['idC']);
+    header("location:commandes.php");
 }
 ?>
 
@@ -82,8 +86,8 @@ if(isset($_GET['idE'])){
                     <a href="users.php" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Users</a>
                     <a href="clients.php" class="nav-item nav-link"><i class="fa fa-keyboard me-2"></i>Clients</a>
                     <a href="categories.php" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Categories</a>
-                    <a href="commandes.php" class="nav-item nav-link"><i class="fa fa-chart-bar me-2"></i>Commands</a>
-                    <a href="products.php" class="nav-item nav-link active"><i class="fa fa-chart-bar me-2"></i>Products</a>
+                    <a href="commandes.php" class="nav-item nav-link active"><i class="fa fa-chart-bar me-2"></i>Commands</a>
+                    <a href="products.php" class="nav-item nav-link "><i class="fa fa-chart-bar me-2"></i>Products</a>
 
                 </div>
             </nav>
@@ -190,33 +194,33 @@ if(isset($_GET['idE'])){
                 <div class="bg-light text-center rounded p-4">
 
                     <div class="d-flex align-items-center justify-content-between mb-4">
-                        <h6 class="mb-0">Products</h6>
-                        <a class="btn btn-sm btn-primary" href="newProduct.php">Ajouter</a>
+                        <h6 class="mb-0">Commands</h6>
                     </div>
                     <div class="table-responsive">
                         <table class="table text-start align-middle table-bordered table-hover mb-0">
                             <thead>
                                 <tr class="text-dark">
                                     <th scope="col"><input class="form-check-input" type="checkbox"></th>
-                                    <th scope="col">Img</th>
-                                    <th scope="col">Nom Produit</th>
-                                    <th scope="col">Prix</th>
-                                    <th scope="col">Categorie</th>
+                                    <th scope="col">Num Commande</th>
+                                    <th scope="col">Client</th>
+                                    <th scope="col">Prix Total</th>
+                                    <th scope="col">Status</th>
                                     <th scope="col">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                            <?php foreach ($products as $product): ?>
+                            <?php foreach ($cammandes as $cammande): ?>
                                 <tr>
                                     <td><input class="form-check-input" type="checkbox"></td>
-                                    <td> <img src="../assets/img/<?php echo htmlspecialchars($product['img']); ?>" alt="<?php echo htmlspecialchars($product['nomProduit']); ?>" style="width: 5rem"></td>
-                                    <td> <?php echo $product['nomProduit'] ?></td>
-                                    <td><?php echo $product['prix'] ?> $</td>
-                                    <td><?php echo $product['categorie'] ?></td>
+                                    <td> <?php echo $cammande['id'] ?></td>
+                                    <td><?php echo $cammande['nom']?> <?php echo $cammande['prenom']?></td>
+                                    <td><?php echo $cammande['totalPrix'] ?>$</td>
+                                    <td><?php echo $cammande['status'] ?> </td>
 
                                     <td>
-                                        <a class="btn btn-sm btn-danger" href="?idE=<?php echo $product['id'] ?>">delete</a>
-                                        <a class="btn btn-sm btn-warning" href="updateProduct.php?idE=<?php echo $product['id'] ?>">Modifier</a>
+                                        <a class="btn btn-sm btn-success" href="?idC=<?php echo $cammande['id'] ?>">valider</a>
+                                        <a class="btn btn-sm btn-danger" href="?idE=<?php echo $cammande['id'] ?>">delete</a>
+                                        <a class="btn btn-sm btn-warning" href="detailsCommandes.php?idCammande=<?php echo $cammande['id'] ?>">Details</a>
 
                                     </td>
                                 </tr>

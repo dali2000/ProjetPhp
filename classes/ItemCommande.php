@@ -50,7 +50,7 @@ class ItemCommande
     // Read by Commande ID
     public function readByCommandeId($idCommande)
     {
-        $sql = "SELECT * FROM item_commandes WHERE idCommande = :idCommande";
+        $sql = "SELECT * FROM itemcommande WHERE idCommande = :idCommande";
         $stmt = $this->db->prepare($sql);
         $stmt->bindParam(':idCommande', $idCommande, \PDO::PARAM_INT);
         $stmt->execute();
@@ -78,7 +78,7 @@ class ItemCommande
     // Delete
     public function delete($id)
     {
-        $sql = "DELETE FROM item_commandes WHERE id = :id";
+        $sql = "DELETE FROM itemcommande WHERE id = :id";
         $stmt = $this->db->prepare($sql);
         $stmt->bindParam(':id', $id, \PDO::PARAM_INT);
 
