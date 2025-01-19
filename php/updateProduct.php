@@ -2,7 +2,12 @@
 include '../classes/Produit.php';
 include "../classes/Categorie.php";
 session_start();
-
+if(isset($_SESSION['nom'])) {
+    $userId = $_SESSION['user_id'];
+    $nom = $_SESSION['nom'];
+    $prenom = $_SESSION['prenom'];
+    $role = $_SESSION['role'];
+}
 // Vérification de la session utilisateur
 if (!isset($_SESSION['user_id'])) {
     header('Location: login.php');
@@ -225,12 +230,12 @@ if (isset($_POST['addE'])) {
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                             <img class="rounded-circle me-lg-2" src="assets/img/user.jpg" alt="" style="width: 40px; height: 40px;">
-                            <span class="d-none d-lg-inline-flex">John Doe</span>
+                            <span class="d-none d-lg-inline-flex"><?php echo $nom," ", $prenom?></span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
                             <a href="#" class="dropdown-item">My Profile</a>
                             <a href="#" class="dropdown-item">Settings</a>
-                            <a href="#" class="dropdown-item">Log Out</a>
+                            <a class="dropdown-item" href="../modules/auth/logout.php">Log Out</a>
                         </div>
                     </div>
                 </div>

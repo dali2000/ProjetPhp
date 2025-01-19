@@ -1,6 +1,7 @@
 <?php
 include_once '../config/Database.php';
 include_once '../classes/User.php';
+session_start();
 
 // Database connection
 $database = new Database();
@@ -8,7 +9,12 @@ $db = $database->getConnection();
 
 // Create User instance
 $user = new \Classes\User($db);
-
+if(isset($_SESSION['nom'])) {
+    $userId = $_SESSION['user_id'];
+    $nom = $_SESSION['nom'];
+    $prenom = $_SESSION['prenom'];
+    $role = $_SESSION['role'];
+}
 $message = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_id'])) {
     $user->id = $_POST['delete_id'];
@@ -79,8 +85,8 @@ $result = $user->readVendeur();
                     <div class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
                 </div>
                 <div class="ms-3">
-                    <h6 class="mb-0">Jhon Doe</h6>
-                    <span>Admin</span>
+                    <h6 class="mb-0"><?php echo $nom," ", $prenom?></h6>
+                    <span><?php echo $role ?></span>
                 </div>
             </div>
             <div class="navbar-nav w-100">
@@ -176,12 +182,12 @@ $result = $user->readVendeur();
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                         <img class="rounded-circle me-lg-2" src="../assets/img/user.jpg" alt="" style="width: 40px; height: 40px;">
-                        <span class="d-none d-lg-inline-flex">John Doe</span>
+                        <span class="d-none d-lg-inline-flex"><?php echo $nom," ", $prenom?></span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
                         <a href="#" class="dropdown-item">My Profile</a>
                         <a href="#" class="dropdown-item">Settings</a>
-                        <a href="#" class="dropdown-item">Log Out</a>
+                        <a class="dropdown-item" href="../modules/auth/logout.php">Log Out</a>
                     </div>
                 </div>
             </div>
