@@ -197,7 +197,7 @@ if (isset($_GET['idE'])) {
                 <div class="bg-light text-center rounded p-4">
 
                     <div class="d-flex align-items-center justify-content-between mb-4">
-                        <h6 class="mb-0">Commands</h6>
+                        <h6 class="mb-0">details Command num <?php echo "$idCommande"?></h6>
                         <a class="btn btn-sm btn-primary" href="commandes.php">All commands</a>
 
                     </div>
@@ -207,7 +207,9 @@ if (isset($_GET['idE'])) {
                                 <tr class="text-dark">
                                     <th scope="col"><input class="form-check-input" type="checkbox"></th>
                                     <th scope="col">Num item</th>
+                                    <th scope="col">Img</th>
                                     <th scope="col">id Produit</th>
+                                    <th scope="col">Nom produit</th>
                                     <th scope="col">quantite</th>
                                     <th scope="col">Prix Total</th>
                                     <th scope="col">Action</th>
@@ -217,13 +219,15 @@ if (isset($_GET['idE'])) {
                             <?php foreach ($itemCommandes as $itemCommande): ?>
                                 <tr>
                                     <td><input class="form-check-input" type="checkbox"></td>
-                                    <td> <?php echo $itemCommande['id'] ?></td>
-                                    <td><?php echo $itemCommande['idProduit']?></td>
+                                    <td> <img src="../assets/img/<?php echo htmlspecialchars($itemCommande['img']); ?>" alt="<?php echo htmlspecialchars($itemCommande['nomProduit']); ?>" style="width: 5rem"></td>
+                                    <td> <?php echo $itemCommande['itemId'] ?></td>
+                                    <td><?php echo $itemCommande['produitId']?></td>
+                                    <td> <?php echo $itemCommande['nomProduit'] ?></td>
                                     <td><?php echo $itemCommande['qte']?></td>
                                     <td><?php echo $itemCommande['prixTotal'] ?> $</td>
 
                                     <td>
-                                        <a class="btn btn-sm btn-danger" href="?idE=<?php echo $itemCommande['id']; ?>&idCammande=<?php echo $idCommande; ?>">delete</a>
+                                        <a class="btn btn-sm btn-danger" href="?idE=<?php echo $itemCommande['itemId']; ?>&idCammande=<?php echo $idCommande; ?>">delete</a>
 
                                     </td>
                                 </tr>

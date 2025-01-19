@@ -50,7 +50,29 @@ class ItemCommande
     // Read by Commande ID
     public function readByCommandeId($idCommande)
     {
-        $sql = "SELECT * FROM itemcommande WHERE idCommande = :idCommande";
+        $sql = "
+        SELECT 
+            itemcommande.id AS itemId,
+            itemcommande.qte,
+            itemcommande.prixTotal,
+            itemcommande.idCommande,
+            produit.id AS produitId,
+            produit.nomProduit,
+            produit.description,
+            produit.prix,
+            produit.vendeurId,
+            produit.idCategorie,
+            produit.img
+        FROM 
+            itemcommande
+        JOIN 
+            produit 
+        ON 
+            itemcommande.idProduit = produit.id
+        WHERE 
+            itemcommande.idCommande = :idCommande
+    ";
+
         $stmt = $this->db->prepare($sql);
         $stmt->bindParam(':idCommande', $idCommande, \PDO::PARAM_INT);
         $stmt->execute();
